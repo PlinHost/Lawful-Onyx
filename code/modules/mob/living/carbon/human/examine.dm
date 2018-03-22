@@ -194,6 +194,7 @@
 	var/list/wound_flavor_text = list()
 	var/applying_pressure = ""
 	var/list/shown_objects = list()
+	var/list/hidden_bleeders = list()
 
 	for(var/organ_tag in species.has_limbs)
 
@@ -219,7 +220,9 @@
 
 		if(hidden && user != src)
 			if(E.status & ORGAN_BLEEDING && !(hidden.item_flags & ITEM_FLAG_THICKMATERIAL)) //not through a spacesuit
-				wound_flavor_text[hidden.name] = "<span class='danger'>[T.He] [T.has] blood soaking through [hidden]!</span><br>"
+				if(!hidden_bleeders[hidden])
+					hidden_bleeders[hidden] = list()
+				hidden_bleeders[hidden] += E.name
 		else
 			if(E.is_stump())
 				wound_flavor_text[E.name] += "<b>[T.He] [T.has] a stump where [T.his] [organ_descriptor] should be.</b>\n"
