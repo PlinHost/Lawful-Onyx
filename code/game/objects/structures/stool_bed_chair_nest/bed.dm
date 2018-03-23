@@ -258,7 +258,7 @@
 	if(istype(W,/obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
-			to_chat(user, "<span class='notice'>You collect the roller bed.</span>")
+			to_chat(user, "<span class='notice'>You collect [src].</span>")
 			src.forceMove(RH)
 			RH.held = src
 			return
@@ -266,17 +266,16 @@
 
 /obj/item/roller_holder
 	name = "roller bed rack"
-	desc = "A rack for carrying a collapsed roller bed."
+	desc = "A rack for carrying collapsed roller beds. Can also be used for carrying ironing boards."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "rollerbed_folded"
 	var/obj/item/roller/held
 
-/obj/item/roller_holder/New()
-	..()
+/obj/item/roller_holder/Initialize()
+	. = ..()
 	held = new /obj/item/roller(src)
 
 /obj/item/roller_holder/attack_self(mob/user as mob)
-
 	if(!held)
 		to_chat(user, "<span class='notice'>The rack is empty.</span>")
 		return
@@ -284,8 +283,6 @@
 	to_chat(user, "<span class='notice'>You deploy the roller bed.</span>")
 	var/obj/structure/bed/roller/R = new held.bedtype(user.loc)
 	R.add_fingerprint(user)
-	qdel(held)
-	held = null
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M as mob)
 	if(M == buckled_mob)
