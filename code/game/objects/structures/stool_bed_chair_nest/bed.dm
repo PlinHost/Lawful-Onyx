@@ -214,20 +214,26 @@
 	rollertype = /obj/item/roller/adv
 
 /obj/structure/bed/roller/update_icon()
-	return // Doesn't care about material or anything else.
+	if(density)
+		icon_state = "up"
+	else
+		icon_state = "down"
 
-/obj/structure/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(isWrench(W) || istype(W,/obj/item/stack) || isWirecutter(W))
+/obj/structure/bed/roller/attackby(obj/item/I as obj, mob/user as mob)
+	if(isWrench(I) || istype(I, /obj/item/stack) || isWirecutter(I))
 		return
-	else if(istype(W,/obj/item/roller_holder))
+	else if(istype(I, /obj/item/roller_holder))
 		if(buckled_mob)
 			user_unbuckle_mob(user)
 		else
-			visible_message("[user] collapses \the [src.name].")
-			new rollertype(get_turf(src))
-			QDEL_IN(src, 0)
+			collapse()
 		return
 	..()
+
+/obj/structure/bed/roller/proc/collapse()
+	visible_message("[usr] collapses [src].")
+	new /obj/item/roller(get_turf(src))
+	qdel(src)
 
 /obj/item/roller
 	name = "roller bed"
@@ -280,12 +286,15 @@
 		to_chat(user, "<span class='notice'>The rack is empty.</span>")
 		return
 
-	var/obj/structure/bed/roller/R = held
+	var/obj/item/roller/R = held
 	R.forceMove(get_turf(src))
+	R.attack_self(user) // deploy it
 	to_chat(user, "<span class='notice'>You deploy [R].</span>")
 	R.add_fingerprint(user)
+	held = null
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M as mob)
+	. = ..()
 	if(M == buckled_mob)
 		set_density(1)
 		icon_state = "[initial(icon_state)]_up"
@@ -293,14 +302,11 @@
 		set_density(0)
 		icon_state = "[initial(icon_state)]"
 
-	return ..()
 
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-		if(!ishuman(usr))	return
-		if(buckled_mob)	return 0
-		visible_message("[usr] collapses \the [src.name].")
-		new rollertype(get_turf(src))
-		QDEL_IN(src, 0)
-		return
+	if(!CanMouseDrop(over_object))	return
+	if(!ishuman(usr))	return
+	if(buckled_mob)	return
+
+	collapse()
