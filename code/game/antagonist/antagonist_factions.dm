@@ -51,4 +51,4 @@
 	set category = "Abilities"
 	if(!M.mind || !M.client)
 		return
-	convert_to_faction(M.mind, loyalists)
+	convert_to_faction(M.mind, GLOB.loyalists)

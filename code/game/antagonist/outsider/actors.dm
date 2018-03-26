@@ -1,4 +1,4 @@
-var/datum/antagonist/actor/actor
+GLOBAL_DATUM_INIT(actor, /datum/antagonist/actor, new)
 
 /datum/antagonist/actor
 	id = MODE_ACTOR
@@ -15,10 +15,6 @@ var/datum/antagonist/actor/actor
 	initial_spawn_req = 1
 	initial_spawn_target = 1
 	show_objectives_on_creation = 0 //actors are not antagonists and do not need the antagonist greet text
-
-/datum/antagonist/actor/New()
-	..()
-	actor = src
 
 /datum/antagonist/actor/greet(var/datum/mind/player)
 	if(!..())
@@ -55,10 +51,10 @@ var/datum/antagonist/actor/actor
 		return
 
 	if(isghostmind(usr.mind) || isnewplayer(usr))
-		if(actor.current_antagonists.len >= actor.hard_cap)
+		if(GLOB.actor.current_antagonists.len >= GLOB.actor.hard_cap)
 			to_chat(usr, "No more actors may spawn at the current time.")
 			return
-		actor.create_default(usr)
+		GLOB.actor.create_default(usr)
 		return
 
 	to_chat(usr, "You must be observing or be a new player to spawn as an actor.")
