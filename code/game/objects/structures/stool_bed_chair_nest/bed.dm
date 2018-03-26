@@ -214,12 +214,15 @@
 	rollertype = /obj/item/roller/adv
 
 /obj/structure/bed/roller/update_icon()
-	return // Doesn't care about material or anything else.
+	if(density)
+		icon_state = "up"
+	else
+		icon_state = "down"
 
-/obj/structure/bed/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(isWrench(W) || istype(W,/obj/item/stack) || isWirecutter(W))
+/obj/structure/bed/roller/attackby(obj/item/I as obj, mob/user as mob)
+	if(isWrench(I) || istype(I, /obj/item/stack) || isWirecutter(I))
 		return
-	else if(istype(W,/obj/item/roller_holder))
+	else if(istype(I, /obj/item/roller_holder))
 		if(buckled_mob)
 			user_unbuckle_mob(user)
 		else
@@ -228,6 +231,11 @@
 			QDEL_IN(src, 0)
 		return
 	..()
+
+/obj/structure/bed/roller/proc/collapse()
+	visible_message("[usr] collapses [src].")
+	new /obj/item/roller(get_turf(src))
+	qdel(src)
 
 /obj/item/roller
 	name = "roller bed"
@@ -254,7 +262,6 @@
 	qdel(src)
 
 /obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
 	if(istype(W,/obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
@@ -285,6 +292,7 @@
 	R.add_fingerprint(user)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M as mob)
+	. = ..()
 	if(M == buckled_mob)
 		set_density(1)
 		icon_state = "[initial(icon_state)]_up"
