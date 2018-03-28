@@ -113,7 +113,7 @@ var/list/global/tank_gauge_cache = list()
 
 	if (istype(W, /obj/item/device/analyzer))
 		return
-	
+
 	if (istype(W,/obj/item/latexballon))
 		var/obj/item/latexballon/LB = W
 		LB.blow(src)
