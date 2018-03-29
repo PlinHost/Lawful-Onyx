@@ -50,6 +50,7 @@
 	update_icon()
 	if(loud)
 		visible_message("\The [src] turns on.")
+		playsound(src.loc, 'sound/effects/flashlight.ogg', 50, 0)
 	return 1
 
 /obj/machinery/floodlight/proc/turn_off(var/loud = 0)
@@ -58,6 +59,7 @@
 	update_icon()
 	if(loud)
 		visible_message("\The [src] shuts down.")
+		playsound(src.loc, 'sound/effects/flashlight.ogg', 50, 0)
 
 /obj/machinery/floodlight/attack_ai(mob/user as mob)
 	if(istype(user, /mob/living/silicon/robot) && Adjacent(user))
@@ -68,6 +70,7 @@
 	else
 		if(!turn_on(1))
 			to_chat(user, "You try to turn on \the [src] but it does not work.")
+			playsound(src.loc, 'sound/effects/flashlight.ogg', 50, 0)
 
 
 /obj/machinery/floodlight/attack_hand(mob/user as mob)
@@ -94,6 +97,7 @@
 	else
 		if(!turn_on(1))
 			to_chat(user, "You try to turn on \the [src] but it does not work.")
+			playsound(src.loc, 'sound/effects/flashlight.ogg', 50, 0)
 
 	update_icon()
 
