@@ -97,7 +97,7 @@ datum/track/New(var/title_name, var/audio)
 
 /obj/machinery/media/jukebox/ui_data()
 	var/list/juke_tracks = new
-	for(var/datum/track/T in tracks)
+	for(var/datum/track/T in GLOB.music_tracks)
 		juke_tracks.Add(T.title)
 
 	var/list/data = list(
@@ -114,7 +114,7 @@ datum/track/New(var/title_name, var/audio)
 		return TRUE
 	switch(action)
 		if("change_track")
-			for(var/datum/track/T in tracks)
+			for(var/datum/track/T in GLOB.music_tracks)
 				if(T.title == params["title"])
 					current_track = T
 					StartPlaying()
