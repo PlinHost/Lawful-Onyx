@@ -654,7 +654,6 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			dat += "<font color='red'><b>You cannot play as this species.</br><small>You was banned to play species!</small></b></font></br>"
 	if (!restricted)
 		dat += "\[<a href='?src=\ref[src];set_species=[pref.species_preview]'>select</a>\]"
-	dat += "</center>"
 
 	user << browse(dat, "window=species;size=700x400")
 
