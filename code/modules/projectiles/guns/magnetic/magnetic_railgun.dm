@@ -89,7 +89,7 @@
 	return ammo && ammo.amount
 
 /obj/item/weapon/gun/magnetic/railgun/tcc/out_of_ammo()
-	qdel(loaded)
+	QDEL_NULL(loaded)
 	loaded = null
 	spawn(3)
 		playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
