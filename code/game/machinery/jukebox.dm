@@ -46,6 +46,10 @@ datum/track/New(var/title_name, var/audio)
 	update_icon()
 	sound_id = "[type]_[sequential_id(type)]"
 
+/obj/machinery/media/jukebox/Initialize()
+	. = ..()
+	tracks = tracks || GLOB.music_tracks.Copy()
+
 /obj/machinery/media/jukebox/Destroy()
 	StopPlaying()
 	. = ..()
@@ -97,7 +101,7 @@ datum/track/New(var/title_name, var/audio)
 
 /obj/machinery/media/jukebox/ui_data()
 	var/list/juke_tracks = new
-	for(var/datum/track/T in GLOB.music_tracks)
+	for(var/datum/track/T in tracks)
 		juke_tracks.Add(T.title)
 
 	var/list/data = list(
@@ -114,7 +118,7 @@ datum/track/New(var/title_name, var/audio)
 		return TRUE
 	switch(action)
 		if("change_track")
-			for(var/datum/track/T in GLOB.music_tracks)
+			for(var/datum/track/T in tracks)
 				if(T.title == params["title"])
 					current_track = T
 					StartPlaying()
