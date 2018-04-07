@@ -127,8 +127,9 @@
 	// Password has been changed by other client connected to this email account
 	if(current_account)
 		if(current_account.password != stored_password)
-			log_out()
-			error = "Invalid Password"
+			if(!log_in())
+				log_out()
+				error = "Invalid Password"
 		// Banned.
 		else if(current_account.suspended)
 			log_out()
