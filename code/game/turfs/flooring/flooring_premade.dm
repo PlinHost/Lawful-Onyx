@@ -96,6 +96,14 @@
 	icon_state = "steel"
 	initial_flooring = /decl/flooring/tiling
 
+//Tiled floor + sub-types
+
+/turf/simulated/floor/tiled
+	name = "steel floor"
+	icon = 'icons/turf/flooring/tiles.dmi'
+	icon_state = "steel"
+	initial_flooring = /decl/flooring/tiling
+
 /turf/simulated/floor/tiled/dark
 	name = "dark floor"
 	icon_state = "dark"
