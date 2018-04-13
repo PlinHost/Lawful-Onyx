@@ -79,6 +79,23 @@ Unique items
 	colour = colors[selectedColor]
 	to_chat(user, "<span class='notice'>Changed color to '[colour].'</span>")
 
+/obj/item/weapon/storage/fakebook
+	name = "Workplace Crisis Management"
+	desc = "Also known as 'I fucked up, what do?'. A very popular book among the NanoTrasen management."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "booknanoregs"
+	attack_verb = list("bashed", "whacked", "educated")
+	throw_speed = 1
+	throw_range = 5
+	w_class = ITEM_SIZE_NORMAL
+	max_w_class = ITEM_SIZE_SMALL
+	max_storage_space = 4
+	startswith = list(
+			/obj/item/weapon/gun/projectile/pistol/liaison,
+			/obj/item/weapon/reagent_containers/pill/tox,
+			/obj/item/weapon/paper/liason_note
+	)
+
 /******
 Weapons
 ******/
