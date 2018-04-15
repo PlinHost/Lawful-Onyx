@@ -8,6 +8,7 @@
  *		Hydrant
  *		First Aid
  *		Excavation Closet
+ *		Shipping Supplies Closet
  */
 
 /*
@@ -57,7 +58,6 @@
 			new /obj/item/clothing/head/helmet/space/emergency(src)
 
 /obj/structure/closet/emcloset/legacy/New()
-	..()
 	new /obj/item/weapon/tank/oxygen(src)
 	new /obj/item/clothing/mask/gas(src)
 
@@ -95,7 +95,6 @@
 		icon_state = icon_closed
 	else
 		icon_state = icon_opened
-
 
 /*
  * Tool Closet
@@ -170,12 +169,12 @@
 	icon_closed = "bombsuit"
 	icon_opened = "bombsuitopen"
 
-/obj/structure/closet/bombcloset/New()
-	..()
-	new /obj/item/clothing/suit/bomb_suit( src )
-	new /obj/item/clothing/under/color/black( src )
-	new /obj/item/clothing/shoes/black( src )
-	new /obj/item/clothing/head/bomb_hood( src )
+/obj/structure/closet/bombcloset/WillContain()
+	return list(
+		/obj/item/clothing/suit/bomb_suit,
+		/obj/item/clothing/under/color/black,
+		/obj/item/clothing/shoes/black,
+		/obj/item/clothing/head/bomb_hood)
 
 
 /obj/structure/closet/bombclosetsecurity
@@ -185,12 +184,12 @@
 	icon_closed = "bombsuitsec"
 	icon_opened = "bombsuitsecopen"
 
-/obj/structure/closet/bombclosetsecurity/New()
-	..()
-	new /obj/item/clothing/suit/bomb_suit/security( src )
-	new /obj/item/clothing/under/rank/security( src )
-	new /obj/item/clothing/shoes/brown( src )
-	new /obj/item/clothing/head/bomb_hood/security( src )
+/obj/structure/closet/bombclosetsecurity/WillContain()
+	return list(
+		/obj/item/clothing/suit/bomb_suit/security,
+		/obj/item/clothing/under/rank/security,
+		/obj/item/clothing/shoes/brown,
+		/obj/item/clothing/head/bomb_hood/security)
 
 /*
  * Hydrant
@@ -239,8 +238,6 @@
 	else
 		icon_state = icon_opened
 
-/obj/structure/closet/medical_wall/filled
-
 /obj/structure/closet/medical_wall/filled/WillContain()
 	return list(
 		/obj/random/firstaid,
@@ -263,8 +260,6 @@
 		icon_state = icon_closed
 	else
 		icon_state = icon_opened
-
-/obj/structure/closet/shipping_wall/filled
 
 /obj/structure/closet/shipping_wall/filled/WillContain()
 	return list(
