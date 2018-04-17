@@ -1030,6 +1030,7 @@
 		for(var/datum/language/L in species.assisted_langs)
 			remove_language(L)
 		// Clear out their species abilities.
+		species.remove_base_auras(src)
 		species.remove_inherent_verbs(src)
 		holder_type = null
 
