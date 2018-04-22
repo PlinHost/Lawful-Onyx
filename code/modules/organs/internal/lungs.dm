@@ -17,6 +17,9 @@
 	var/exhale_type
 
 	var/min_breath_pressure
+	var/last_int_pressure
+	var/last_ext_pressure
+	var/max_pressure_diff = 60
 
 	var/oxygen_deprivation = 0
 	var/safe_exhaled_max = 10
@@ -50,6 +53,7 @@
 /obj/item/organ/internal/lungs/set_dna(var/datum/dna/new_dna)
 	..()
 	sync_breath_types()
+	max_pressure_diff = species.max_pressure_diff
 
 /obj/item/organ/internal/lungs/replaced()
 	..()
@@ -105,6 +109,19 @@
 	if(istype(parent))
 		owner.custom_pain("You feel a stabbing pain in your [parent.name]!", 50, affecting = parent)
 	bruise()
+
+//exposure to extreme pressures can rupture lungs
+/obj/item/organ/internal/lungs/proc/check_rupturing(breath_pressure)
+	if(isnull(last_int_pressure))
+		last_int_pressure = breath_pressure
+		return
+	var/datum/gas_mixture/environment = loc.return_air_for_internal_lifeform()
+	var/int_pressure_diff = abs(last_int_pressure - breath_pressure)
+	var/ext_pressure_diff = abs(last_ext_pressure - environment.return_pressure()) * owner.get_pressure_weakness()
+	if(int_pressure_diff > max_pressure_diff && ext_pressure_diff > max_pressure_diff)
+		var/lung_rupture_prob = isrobotic() ? prob(30) : prob(60) //Robotic lungs are less likely to rupture.
+		if(!is_bruised() && lung_rupture_prob) //only rupture if NOT already ruptured
+			rupture()
 
 /obj/item/organ/internal/lungs/proc/handle_breath(datum/gas_mixture/breath, var/forced)
 	if(!owner)
@@ -255,6 +272,7 @@
 		owner.adjustOxyLoss(HUMAN_MAX_OXYLOSS*breath_fail_ratio)
 
 	owner.oxygen_alert = max(owner.oxygen_alert, 2)
+	last_int_pressure = 0
 
 /obj/item/organ/internal/lungs/proc/handle_temperature_effects(datum/gas_mixture/breath)
 	// Hot air hurts :(
