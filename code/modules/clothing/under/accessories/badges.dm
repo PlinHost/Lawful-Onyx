@@ -10,12 +10,12 @@
 	icon_state = "detectivebadge"
 	slot_flags = SLOT_BELT | SLOT_TIE
 	slot = ACCESSORY_SLOT_INSIGNIA
+	high_visibility = 1
 	var/badge_string = "Detective"
 	var/stored_name
 
 /obj/item/clothing/accessory/badge/proc/set_name(var/new_name)
 	stored_name = new_name
-	name = "[initial(name)] ([stored_name])"
 
 /obj/item/clothing/accessory/badge/attack_self(mob/user as mob)
 
@@ -33,6 +33,8 @@
 /obj/item/clothing/accessory/badge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
 		user.visible_message("<span class='danger'>[user] invades [M]'s personal space, thrusting \the [src] into their face insistently.</span>","<span class='danger'>You invade [M]'s personal space, thrusting \the [src] into their face insistently.</span>")
+		if(stored_name)
+			to_chat(M, "<span class='warning'>It reads: [stored_name], [badge_string].</span>")
 
 /obj/item/clothing/accessory/badge/PI
 	name = "private investigator's badge"
@@ -49,6 +51,7 @@
 	item_state = "holobadge"
 	badge_string = "Security"
 	var/badge_access = access_security
+	var/badge_number
 	var/emagged //emag_act removes access requirements
 
 /obj/item/clothing/accessory/badge/holo/NT
@@ -65,6 +68,16 @@
 /obj/item/clothing/accessory/badge/holo/NT/cord
 	icon_state = "holobadge-cord"
 	slot_flags = SLOT_MASK | SLOT_TIE
+
+/obj/item/clothing/accessory/badge/holo/set_name(var/new_name)
+	..()
+	badge_number = random_id(type,1000,9999)
+	name = "[name] ([badge_number])"
+
+/obj/item/clothing/accessory/badge/holo/examine(user)
+	..()
+	if(badge_number)
+		to_chat(user,"The badge number is [badge_number].")
 
 /obj/item/clothing/accessory/badge/holo/attack_self(mob/user as mob)
 	if(!stored_name)
@@ -97,7 +110,8 @@
 
 		if((badge_access in id_card.access) || emagged)
 			to_chat(user, "You imprint your ID details onto the badge.")
-			set_name(user.real_name)
+			set_name(id_card.registered_name)
+			set_desc(user)
 		else
 			to_chat(user, "[src] rejects your ID, and flashes 'Insufficient access!'")
 		return
