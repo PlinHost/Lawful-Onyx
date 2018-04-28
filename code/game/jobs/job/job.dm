@@ -108,7 +108,7 @@
 	var/decl/hierarchy/outfit/outfit = get_outfit(H, alt_title, branch)
 	if(!outfit)
 		return FALSE
-	. = outfit.equip(H, title, alt_title, OUTFIT_ADJUSTMENT_SKIP_POST_EQUIP|OUTFIT_ADJUSTMENT_SKIP_ID_PDA)
+	. = outfit.equip(H, title, alt_title, OUTFIT_ADJUSTMENT_SKIP_POST_EQUIP|OUTFIT_ADJUSTMENT_SKIP_ID_PDA|additional_skips)
 
 /datum/job/proc/get_access()
 	if(minimal_access.len && (!config || config.jobs_have_minimal_access))
@@ -248,8 +248,4 @@
 
 /datum/job/proc/dress_mannequin(var/mob/living/carbon/human/dummy/mannequin/mannequin)
 	mannequin.delete_inventory(TRUE)
-	equip(mannequin)
-	if(mannequin.back)
-		var/obj/O = mannequin.back
-		mannequin.drop_from_inventory(O)
-		qdel(O)
+	equip_preview(mannequin, additional_skips = OUTFIT_ADJUSTMENT_SKIP_BACKPACK)
