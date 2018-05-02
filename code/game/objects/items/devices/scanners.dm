@@ -363,7 +363,7 @@ proc/medical_scan_results(var/mob/living/carbon/human/H, var/verbose, var/separa
 
 
 // Calculates severity based on the ratios defined external limbs.
-proc/get_wound_severity(var/damage_ratio, var/vital = 0)
+proc/get_wound_severity(var/damage_ratio, var/can_heal_overkill = 0)
 	var/degree
 
 	switch(damage_ratio)
@@ -378,7 +378,7 @@ proc/get_wound_severity(var/damage_ratio, var/vital = 0)
 		if(0.75 to 1)
 			degree = "extreme"
 		else
-			if(vital)
+			if(can_heal_overkill)
 				degree = "critical"
 			else
 				degree = "irreparable"
