@@ -57,7 +57,6 @@
 	var/max_uses = 20
 	var/uses = 10
 	var/emagged = 0
-	var/failmsg = ""
 	var/charge = 0
 	var/load_interval = 60
 	var/store_broken = 0//If set, this lightreplacer will suck up and store broken bulbs
@@ -72,10 +71,6 @@
 	desc = "A specialised light replacer which stores more lights and refills faster from boxes."
 	icon_state = "adv_lightreplacer"
 	item_state = "adv_lightreplacer"
-
-/obj/item/device/lightreplacer/New()
-	failmsg = "The [name]'s refill light blinks red."
-	..()
 
 /obj/item/device/lightreplacer/examine(mob/user)
 	if(..(user, 2))
@@ -196,7 +191,7 @@
 	if(target.get_status() == LIGHT_OK)
 		to_chat(U, "There is a working [target.get_fitting_name()] already inserted.")
 	else if(!CanUse(U))
-		to_chat(U, failmsg)
+		to_chat(U, "\The [src]'s refill light blinks red.")
 	else if(Use(U))
 		to_chat(U, "<span class='notice'>You replace the [target.get_fitting_name()] with the [src].</span>")
 
