@@ -183,4 +183,4 @@
 
 #define FLAGS_EQUALS(flag, flags) ((flag & (flags)) == (flags))
 
-#define JOINTEXT(X) jointext(x, null)
+#define JOINTEXT(X) jointext(X, null)
