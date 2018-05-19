@@ -316,10 +316,12 @@
 	name = "coastline"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "sandwater"
+	turf_flags = TURF_IS_WET
 
 /turf/simulated/floor/natural/beach/water
 	name = "water"
 	icon_state = "water"
+	turf_flags = TURF_IS_WET
 
 /turf/simulated/floor/natural/beach/water/update_dirt()
 	return	// Water doesn't become dirty
