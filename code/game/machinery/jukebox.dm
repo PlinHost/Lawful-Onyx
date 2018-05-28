@@ -48,7 +48,7 @@ datum/track/New(var/title_name, var/audio)
 
 /obj/machinery/media/jukebox/Initialize()
 	. = ..()
-	tracks = tracks || GLOB.music_tracks.Copy()
+	tracks = setup_music_tracks(tracks)
 
 /obj/machinery/media/jukebox/Destroy()
 	StopPlaying()
