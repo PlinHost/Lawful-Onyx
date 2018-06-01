@@ -330,8 +330,16 @@
 
 		//We can grab the item, finally.
 		if(grab)
+			if(I == user.s_active)
+				var/obj/item/weapon/storage/storage = I
+				storage.close(user) //Closes the ui.
+			if(istype(I.loc, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/storage = I.loc
+				if(!storage.remove_from_storage(I, src))
+					return
+			else
+				I.forceMove(src)
 			to_chat(user, "<span class='notice'>You collect \the [I].</span>")
-			I.loc = src
 			wrapped = I
 			return
 		else
