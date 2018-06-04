@@ -87,7 +87,8 @@
 		/obj/item/seeds/towermycelium = 30,
 		/obj/item/seeds/watermelonseed = 30,
 		/obj/item/seeds/wheatseed = 30,
-		/obj/item/seeds/whitebeetseed = 30
+		/obj/item/seeds/whitebeetseed = 30,
+		/obj/item/seeds/algaeseed = 30
 	)
 
 /obj/machinery/seed_storage/xenobotany
@@ -141,6 +142,7 @@
 		/obj/item/seeds/watermelonseed = 30,
 		/obj/item/seeds/wheatseed = 30,
 		/obj/item/seeds/whitebeetseed = 30,
+		/obj/item/seeds/algaeseed = 30,
 		/obj/item/seeds/random = 10
 	)
 
