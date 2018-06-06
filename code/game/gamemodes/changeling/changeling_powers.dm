@@ -369,6 +369,9 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 
 	var/datum/changeling/changeling = changeling_power(1,1,0)
 	if(!changeling)	return
+	
+	if(HAS_TRANSFORMATION_MOVEMENT_HANDLER(src))
+		return
 
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
@@ -392,8 +395,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	for (var/obj/item/weapon/implant/I in C) //Still preserving implants
 		implants += I
 
-	C.transforming = 1
-	C.canmove = 0
+	ADD_TRANSFORMATION_MOVEMENT_HANDLER(C)
 	C.icon = null
 	C.overlays.Cut()
 	C.set_invisibility(101)
@@ -461,7 +463,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	var/mob/living/carbon/C = src
 
 	C.status_flags |= FAKEDEATH		//play dead
-	C.update_canmove()
+	C.UpdateLyingBuckledAndVerbStatus()
 	C.remove_changeling_powers()
 
 	C.emote("gasp")
@@ -494,7 +496,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	// remove our fake death flag
 	C.status_flags &= ~(FAKEDEATH)
 	// let us move again
-	C.update_canmove()
+	C.UpdateLyingBuckledAndVerbStatus()
 	// re-add out changeling powers
 	C.make_changeling()
 	// sending display messages
@@ -535,7 +537,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	C.SetStunned(0)
 	C.SetWeakened(0)
 	C.lying = 0
-	C.update_canmove()
+	C.UpdateLyingBuckledAndVerbStatus()
 
 	src.verbs -= /mob/proc/changeling_unstun
 	spawn(5)	src.verbs += /mob/proc/changeling_unstun

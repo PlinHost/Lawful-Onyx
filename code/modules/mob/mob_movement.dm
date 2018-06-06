@@ -1,3 +1,11 @@
+/mob
+	var/move_delay		= 1
+	var/moving			= FALSE
+
+/mob/proc/SelfMove(var/direction)
+	if(DoMove(direction, src) & MOVEMENT_HANDLED)
+		return TRUE // Doesn't necessarily mean the mob physically moved
+
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
@@ -11,8 +19,9 @@
 	return
 
 /mob/proc/setMoveCooldown(var/timeout)
-	if(client)
-		client.move_delay = max(world.time + timeout, client.move_delay)
+	var/datum/movement_handler/mob/delay/delay = GetMovementHandler(/datum/movement_handler/mob/delay)
+	if(delay)
+		delay.AddDelay(timeout)
 
 /client/proc/client_dir(input, direction=-1)
 	return turn(input, direction*dir2angle(dir))
