@@ -1,10 +1,11 @@
 /datum/species/alium
-	name = "Humanoid"
+	name = SPECIES_ALIEN
 	name_plural = "Humanoids"
 	blurb = "Some alien humanoid species, unknown to humanity. How exciting."
 	rarity_value = 5
 
 	species_flags = SPECIES_FLAG_NO_SCAN
+	spawn_flags = SPECIES_IS_RESTRICTED
 
 	icobase = 'icons/mob/human_races/r_humanoid.dmi' 
 	deform = 'icons/mob/human_races/r_humanoid.dmi'
@@ -84,6 +85,9 @@
 
 	..()
 #undef RANDOM_COEF
+
+/datum/species/human/get_bodytype(var/mob/living/carbon/human/H)
+	return SPECIES_HUMAN
 
 /datum/species/alium/proc/adapt_to_atmosphere(var/datum/gas_mixture/atmosphere)
 	var/temp_comfort_shift = atmosphere.temperature - body_temperature

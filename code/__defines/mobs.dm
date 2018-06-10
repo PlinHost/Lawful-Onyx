@@ -281,6 +281,7 @@
 #define SPECIES_BOGANI      "Bogani"
 #define SPECIES_EGYNO       "Egyno"
 #define SPECIES_XENO        "Xenophage"
+#define SPECIES_ALIEN       "Humanoid"
 
 #define SURGERY_CLOSED 0
 #define SURGERY_OPEN 1
