@@ -17,6 +17,9 @@
 	amt_dam_brute = -15
 	amt_dam_fire = -5
 
+	effect_state = "green_sparkles"
+	effect_duration = 5
+
 	message = "You feel a pleasant rush of heat move through your body."
 
 /spell/targeted/heal_target/empower_spell()
@@ -104,6 +107,8 @@
 	amt_dam_oxy = -100
 	amt_dam_tox = -100
 	amt_blood  = 280
+
+	effect_color = "#ff0000"
 
 	hud_state = "gen_dissolve"
 
