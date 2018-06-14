@@ -175,10 +175,6 @@ var/list/name_to_material
 /material/proc/build_windows(var/mob/living/user, var/obj/item/stack/used_stack)
 	return 0
 
-// Weapons handle applying a divisor for this value locally.
-/material/proc/get_blunt_damage()
-	return weight //todo
-
 // Return the matter comprising this material.
 /material/proc/get_matter()
 	var/list/temp_matter = list()
@@ -189,9 +185,20 @@ var/list/name_to_material
 		temp_matter[name] = SHEET_MATERIAL_AMOUNT
 	return temp_matter
 
+// Weapons handle applying a divisor for this value locally.
+/material/proc/get_blunt_damage()
+	return weight //todo
+
 // As above.
 /material/proc/get_edge_damage()
 	return hardness //todo
+
+/material/proc/get_attack_cooldown()
+	if(weight < 19)
+		return FAST_WEAPON_COOLDOWN
+	if(weight > 23)
+		return SLOW_WEAPON_COOLDOWN
+	return DEFAULT_WEAPON_COOLDOWN
 
 // Snowflakey, only checked for alien doors at the moment.
 /material/proc/can_open_material_door(var/mob/living/user)
@@ -427,6 +434,7 @@ var/list/name_to_material
 	burn_armor = 8
 	integrity = 200
 	melting_point = 3000
+	weight = 18
 	stack_type = null
 	resilience = 49
 	reflectance = 15
