@@ -195,15 +195,6 @@
 	access = access_armory
 	security_level = SUPPLY_SECURITY_ELEVATED
 
-/decl/hierarchy/supply_pack/security/pistol
-	name = "Weapons - Ballistic sidearms"
-	contains = list(/obj/item/weapon/gun/projectile/sec = 4)
-	cost = 40
-	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "\improper Ballistic sidearms crate"
-	access = access_armory
-	security_level = SUPPLY_SECURITY_ELEVATED
-
 /decl/hierarchy/supply_pack/security/shotgun
 	name = "Weapons - Shotgun"
 	contains = list(/obj/item/weapon/gun/projectile/shotgun/pump/combat = 2)
