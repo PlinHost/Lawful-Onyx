@@ -109,6 +109,9 @@ var/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	var/salary_modifier	= 1			//Multiplier to starting character money
 	var/station_departments = list()//Gets filled automatically depending on jobs allowed
 
+	var/supply_currency_name = "Credits"
+	var/supply_currency_name_short = "Cr."
+
 	//Factions prefs stuff
 	var/list/faction_choices = list(
 		"NanoTrasen", // NanoTrasen must be first, else Company Provocation event will break
