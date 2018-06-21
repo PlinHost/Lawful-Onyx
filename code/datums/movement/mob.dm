@@ -217,6 +217,10 @@
 			mob.move_delay += 7 + config.walk_speed
 	mob.move_delay += mob.movement_delay()
 
+	//Crawling, it's slower
+	if(mob.lying)
+		mob.move_delay += 8 + (mob.weakened * 2)
+
 	if(mob.check_slipmove())
 		return
 
