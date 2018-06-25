@@ -186,7 +186,7 @@ steam.start() -- spawns the effect
 		affect(M)
 
 /obj/effect/effect/smoke/proc/affect(var/mob/living/carbon/M)
-	if (istype(M))
+	if (!istype(M))
 		return 0
 	if (M.internal != null)
 		if(M.wear_mask && (M.wear_mask.item_flags & ITEM_FLAG_AIRTIGHT))
@@ -335,6 +335,9 @@ steam.start() -- spawns the effect
 			direction = pick(GLOB.alldirs)
 	for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
 		sleep(1 SECOND)
+		if(QDELETED(smoke))
+			total_smoke--
+			return
 		step(smoke,direction)
 		if(var/obj/effect/effect/smoke/not_us in loc && not_us != smoke)
 		step(not_us,direction)
