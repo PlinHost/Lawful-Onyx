@@ -17,7 +17,7 @@
 	if(N)
 		transfer_amount = N
 
-/obj/structure/iv_drip/update_icon()
+/obj/structure/iv_drip/queue_icon_update()
 	if(attached)
 		icon_state = "hooked"
 	else
@@ -53,7 +53,6 @@
 /obj/structure/iv_drip/MouseDrop(over_object, src_location, over_location)
 	if(!CanMouseDrop(over_object))
 		return
-
 	if(attached)
 		visible_message("\The [attached] is taken off \the [src]")
 		attached = null
@@ -73,7 +72,7 @@
 		W.forceMove(src)
 		beaker = W
 		to_chat(user, "You attach \the [W] to \the [src].")
-		update_icon()
+		queue_icon_update()
 	else
 		return ..()
 
@@ -101,7 +100,7 @@
 	if(mode) // Give blood
 		if(beaker.volume > 0)
 			beaker.reagents.trans_to_mob(attached, transfer_amount, CHEM_BLOOD)
-			update_icon()
+			queue_icon_update()
 	else // Take blood
 		var/amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 		amount = min(amount, 4)
@@ -118,13 +117,15 @@
 			visible_message("\The [src] beeps loudly.")
 
 		if(attached.take_blood(beaker,amount))
-			update_icon()
+			queue_icon_update()
 
 /obj/structure/iv_drip/attack_hand(mob/user as mob)
-	if(beaker)
+	if(attached)
+		drip_detach()
+	else if(beaker)
 		beaker.dropInto(loc)
 		beaker = null
-		update_icon()
+		queue_icon_update()
 	else
 		return ..()
 
@@ -132,6 +133,27 @@
 	if(Adjacent(user))
 		attack_hand(user)
 
+/obj/structure/iv_drip/verb/drip_detach()
+	set category = "Object"
+	set name = "Detach IV Drip"
+	set src in range(1)
+	
+	if(!attached)
+		return
+		
+	if(!usr.Adjacent(attached))
+		to_chat(usr, "<span class='warning'>You are too far away from the [attached]!</span>")
+		return
+		
+	if(!usr.skill_check(SKILL_MEDICAL, SKILL_BASIC))
+		rip_out()
+	else
+		visible_message("\The [attached] is taken off \the [src].")
+		attached = null
+	
+	queue_icon_update()
+	STOP_PROCESSING(SSobj,src)
+		
 /obj/structure/iv_drip/verb/toggle_mode()
 	set category = "Object"
 	set name = "Toggle IV Mode"
