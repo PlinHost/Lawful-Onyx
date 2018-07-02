@@ -292,53 +292,6 @@
 		add_cloaking_source(species)
 		apply_effect(2, STUN, 0)
 
-/mob/living/carbon/human/proc/switch_stance()
-	set category = "Abilities"
-	set name = "Switch Stance"
-	set desc = "Toggle between your hunting and manipulation stance"
-
-	if(stat) return
-
-	to_chat(src, "<span class='notice'>You begin to adjust the fluids in your arms, dropping everything and getting ready to swap which set you're using.</span>")
-	var/hidden = is_cloaked()
-	if(!hidden)
-		visible_message("[src] shifts \his arms.")
-
-	if(l_hand) unEquip(l_hand)
-	if(r_hand) unEquip(r_hand)
-
-	if(do_after(src, 30))
-		arm_swap()
-	else
-		to_chat(src, "<span class='notice'>You stop adjusting your arms and don't switch between them.</span>")
-
-/mob/living/carbon/human/proc/arm_swap(var/forced = FALSE)
-	if(l_hand) unEquip(l_hand)
-	if(r_hand) unEquip(r_hand)
-	var/hidden = is_cloaked()
-	pulling_punches = !pulling_punches
-	nabbing = !pulling_punches
-
-	if(pulling_punches)
-		current_grab_type = all_grabobjects[GRAB_NORMAL]
-		if(forced)
-			to_chat(src, "<span class='notice'>You can't keep your hunting arms prepared and they drop, forcing you to use your manipulation arms.</span>")
-			if(!hidden)
-				visible_message("<span class='notice'>[src] falters, hunting arms failing.</span>")
-		else
-			to_chat(src, "<span class='notice'>You relax your hunting arms, lowering the pressure and folding them tight to your thorax.\
-			You reach out with your manipulation arms, ready to use complex items.</span>")
-			if(!hidden)
-				visible_message("<span class='notice'>[src] seems to relax as \he folds \his massive curved arms to \his thorax and reaches out \
-				with \his small handlike limbs.</span>")
-	else
-		current_grab_type = all_grabobjects[GRAB_NAB]
-		to_chat(src, "<span class='notice'>You pull in your manipulation arms, dropping any items and unfolding your massive hunting arms in preparation of grabbing prey.</span>")
-		if(!hidden)
-			visible_message("<span class='warning'>[src] tenses as \he brings \his smaller arms in close to \his body. \His two massive spiked arms reach \
-			out. \He looks ready to attack.</span>")
-
-
 /mob/living/carbon/human/proc/change_colour()
 	set category = "Abilities"
 	set name = "Change Colour"
