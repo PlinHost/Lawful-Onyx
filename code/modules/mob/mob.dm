@@ -730,7 +730,7 @@
 	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
 		buckled.set_dir(ndir)
-	setMoveCooldown(movement_delay())
+	SetMoveCooldown(movement_delay())
 	return 1
 
 

@@ -1,6 +1,5 @@
 /mob
-	var/move_delay		= 1
-	var/moving			= FALSE
+	var/moving           = FALSE
 
 /mob/proc/SelfMove(var/direction)
 	if(DoMove(direction, src) & MOVEMENT_HANDLED)
@@ -18,7 +17,12 @@
 		return (!mover.density || !density || lying)
 	return
 
-/mob/proc/setMoveCooldown(var/timeout)
+/mob/proc/SetMoveCooldown(var/timeout)
+	var/datum/movement_handler/mob/delay/delay = GetMovementHandler(/datum/movement_handler/mob/delay)
+	if(delay)
+		delay.SetDelay(timeout)
+
+/mob/proc/ExtraMoveCooldown(var/timeout)
 	var/datum/movement_handler/mob/delay/delay = GetMovementHandler(/datum/movement_handler/mob/delay)
 	if(delay)
 		delay.AddDelay(timeout)
