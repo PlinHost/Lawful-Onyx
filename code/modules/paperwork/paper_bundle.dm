@@ -65,7 +65,6 @@
 	sheet.loc = src
 
 	pages.Insert(index, sheet)
-
 	if(index <= page)
 		page++
 
