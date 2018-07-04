@@ -686,6 +686,8 @@ default behaviour is:
 /mob/living/carbon/drop_from_inventory(var/obj/item/W, var/atom/Target = null, var/force = null)
 	if(W in internal_organs)
 		return
+	if(W in organs)
+		return
 	. = ..()
 
 //damage/heal the mob ears and adjust the deaf amount
