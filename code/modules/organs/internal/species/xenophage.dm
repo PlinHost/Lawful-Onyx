@@ -1,3 +1,9 @@
+/obj/item/organ/internal/brain/xeno
+	name = "thinkpan"
+	desc = "It looks kind of like an enormous wad of purple bubblegum."
+	icon = 'icons/mob/alien.dmi'
+	icon_state = "chitin"
+
 //XENOMORPH ORGANS
 /obj/item/organ/internal/xeno
 	name = "xeno organ"
