@@ -7,6 +7,7 @@
 	anchored = 1.0
 	plane = ABOVE_TURF_PLANE
 	layer = CATWALK_LAYER
+	var/hatch_open = FALSE
 	footstep_sounds= list(
 		'sound/effects/footstep/catwalk1.ogg',
 		'sound/effects/footstep/catwalk2.ogg',
@@ -72,7 +73,7 @@
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-			to_chat(user, "<span class='notice'>Slicing catwalk joints ...</span>")
+			to_chat(user, "<span class='notice'>Slicing \the [src] joints ...</span>")
 			new /obj/item/stack/rods(src.loc)
 			new /obj/item/stack/rods(src.loc)
 			//Lattice would delete itself, but let's save ourselves a new obj
