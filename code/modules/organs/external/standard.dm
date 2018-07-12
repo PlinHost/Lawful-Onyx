@@ -76,12 +76,6 @@
 	arterial_bleed_severity = 0.75
 	//gendered_icon = 1
 
-/obj/item/organ/external/arm/stun_act(var/stun_amount, var/agony_amount)
-	if(!owner || (agony_amount < 5))
-		return
-	if(prob(25))
-		owner.grasp_damage_disarm(src)
-
 /obj/item/organ/external/arm/right
 	organ_tag = BP_R_ARM
 	name = "right arm"
@@ -110,13 +104,6 @@
 	arterial_bleed_severity = 0.75
 	//gendered_icon = 1
 
-/obj/item/organ/external/leg/stun_act(var/stun_amount, var/agony_amount)
-	if(!owner || agony_amount < 5)
-		return
-	if(prob(min(agony_amount*2,50)))
-		to_chat(owner, "<span class='warning'>Your [src] buckles from the shock!</span>")
-		owner.Weaken(5)
-
 /obj/item/organ/external/leg/right
 	organ_tag = BP_R_LEG
 	name = "right leg"
@@ -143,17 +130,6 @@
 	tendon_name = "Achilles tendon"
 	arterial_bleed_severity = 0.5
 	//gendered_icon = 1
-
-/obj/item/organ/external/foot/stun_act(var/stun_amount, var/agony_amount)
-	if(!owner || agony_amount < 5)
-		return
-	if(prob(min(agony_amount*4,70)))
-		to_chat(owner, "<span class='warning'>You lose your footing as your [src] spasms!</span>")
-		owner.Weaken(5)
-
-/obj/item/organ/external/foot/removed()
-	if(owner) owner.drop_from_inventory(owner.shoes)
-	..()
 
 /obj/item/organ/external/foot/right
 	organ_tag = BP_R_FOOT
