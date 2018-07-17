@@ -72,7 +72,6 @@
 	var/arterial_bleed_severity = 1    // Multiplier for bleeding in a limb.
 	var/tendon_name = "tendon"         // Flavour text for Achilles tendon, etc.
 	var/cavity_name = "cavity"
-	var/brittle = FALSE // Temp, replace with bitflag when organ PR is merged.
 
 	// Surgery vars.
 	var/cavity_max_w_class = 0
@@ -152,8 +151,12 @@
 
 /obj/item/organ/external/emp_act(severity)
 
+	if(!BP_IS_ROBOTIC(src))
+		return
 
-	if(robotic <= 0)
+	if(owner && BP_IS_CRYSTAL(src)) // Crystalline robotics == piezoelectrics.
+		owner.Weaken(5 - severity)
+		owner.confused = max(owner.confused, 10 - (severity * 2))
 		return
 
 	var/burn_damage = 0
@@ -431,6 +434,9 @@ This function completely restores a damaged organ to perfect condition.
 					robotize()
 		owner.updatehealth()
 
+	if(!QDELETED(src) && species)
+		species.post_organ_rejuvenate(src)
+
 /obj/item/organ/external/remove_rejuv()
 	if(owner)
 		owner.organs -= src
@@ -447,8 +453,25 @@ This function completely restores a damaged organ to perfect condition.
 
 /obj/item/organ/external/proc/createwound(var/type = CUT, var/damage, var/surgical)
 
-	if(damage == 0)
+	// Handle some status-based damage multipliers.
+	if(type == BRUISE && BP_IS_BRITTLE(src))
+		damage = Floor(damage * 1.5)
+
+	if(BP_IS_CRYSTAL(src))
+		// this needs to cover type == BURN because lasers don't use LASER, but with the way bodytemp
+		// damage is handled currently that isn't really possible without an infinite feedback loop.
+		if(type == LASER)
+			owner.bodytemperature += ceil(damage/10)
+			owner.visible_message("<span class='warning'>\The [owner]'s crystalline [name] shines with absorbed energy!</span>")
+			return
+		damage = Floor(damage * 0.8)
+		type = SHATTER
+
+	if(damage <= 0)
 		return
+
+	if(loc && type == SHATTER)
+		playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 40, 1) // Crash!
 
 	//moved these before the open_wound check so that having many small wounds for example doesn't somehow protect you from taking internal damage (because of the return)
 	//Brute damage can possibly trigger an internal wound, too.
@@ -490,7 +513,7 @@ This function completely restores a damaged organ to perfect condition.
 						"<span class='danger'>The damage to your [name] worsens.</span>",\
 						"<span class='danger'>You hear the screech of abused metal.</span>")
 					else
-						owner.visible_message("<span class='danger'>The wound on [owner.name]'s [name] widens with a nasty ripping noise.</span>",\
+						owner.visible_message("<span class='danger'>The wound on \the [owner]'s [name] widens with a nasty ripping noise.</span>",\
 						"<span class='danger'>The wound on your [name] widens with a nasty ripping noise.</span>",\
 						"<span class='danger'>You hear a nasty ripping noise, as if flesh is being torn apart.</span>")
 				return W
@@ -707,6 +730,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		H = owner
 
 	//update damage counts
+	var/bleeds = (!BP_IS_ROBOTIC(src) && !BP_IS_CRYSTAL(src))
 	for(var/datum/wound/W in wounds)
 		if(W.damage_type == BURN)
 			burn_dam += W.damage
@@ -771,9 +795,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(!clean)
 				var/gore_sound = "[(robotic >= ORGAN_ROBOT) ? "tortured metal" : "ripping tendons and flesh"]"
 				return list(
-					"\The [owner]'s [src.name] flies off in an arc!",\
-					"Your [src.name] goes flying off!",\
-					"You hear a terrible sound of [gore_sound]." \
+					"\The [owner]'s [src.name] flashes away into ashes!",
+					"Your [src.name] flashes away into ashes!",
+					"You hear a crackling sound[gore]."
+					)
+			if(DROPLIMB_BLUNT)
+				var/gore = "[BP_IS_ROBOTIC(src) ? "": " in shower of gore"]"
+				var/gore_sound = "[BP_IS_ROBOTIC(src) ? "rending sound of tortured metal" : "sickening splatter of gore"]"
+				return list(
+					"\The [owner]'s [src.name] explodes[gore]!",
+					"Your [src.name] explodes[gore]!",
+					"You hear the [gore_sound]."
 					)
 		if(DROPLIMB_BURN)
 			var/gore = "[(robotic >= ORGAN_ROBOT) ? "": " of burning flesh"]"
@@ -869,9 +901,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(victim))
 				if(species)
-					gore.fleshcolor = use_flesh_colour
-					gore.basecolor =  use_blood_colour
-					gore.update_icon()
+					var/obj/effect/decal/cleanable/blood/gibs/G = gore
+					G.fleshcolor = use_flesh_colour
+					G.basecolor =  use_blood_colour
+					G.update_icon()
 
 			gore.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),30)
 

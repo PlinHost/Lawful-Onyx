@@ -337,6 +337,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 	for(var/obj/item/organ/O in (H.organs|H.internal_organs))
 		O.owner = H
+		post_organ_rejuvenate(O)
 
 	H.sync_organ_dna()
 
