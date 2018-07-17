@@ -273,7 +273,7 @@
 	if (!hasorgans(target))
 		return
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	if(!affected) return
+	if(!affected || BP_IS_BRITTLE(affected)) return
 
 	for(var/obj/item/organ/internal/I in affected.internal_organs)
 		if(I.isrobotic() && I.damage > 0)
