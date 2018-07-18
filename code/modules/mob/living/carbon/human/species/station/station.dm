@@ -10,6 +10,7 @@
 	worlds tumultous at best."
 	num_alternate_languages = 2
 	secondary_langs = list(LANGUAGE_SOL_COMMON)
+	assisted_langs = list(LANGUAGE_NABBER)
 	name_language = null // Use the first-name last-name generator rather than a language scrambler
 	min_age = 17
 	max_age = 100
@@ -162,6 +163,7 @@
 	the secrets of their empire to their allies."
 	num_alternate_languages = 2
 	secondary_langs = list(LANGUAGE_SKRELLIAN)
+	assisted_langs = list(LANGUAGE_NABBER)
 	name_language = null
 	health_hud_intensity = 1.75
 
@@ -223,6 +225,7 @@
 	num_alternate_languages = 2
 	strength = STR_VHIGH
 	secondary_langs = list(LANGUAGE_ROOTGLOBAL)
+	assisted_langs = list(LANGUAGE_NABBER)
 	name_language = LANGUAGE_ROOTLOCAL
 	spawns_with_stack = 0
 	health_hud_intensity = 2
