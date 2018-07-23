@@ -886,7 +886,7 @@ var/list/admin_verbs_mentor = list(
 	if(holder)
 		var/list/jobs = list()
 		for (var/datum/job/J in job_master.occupations)
-			if (J.current_positions >= J.total_positions && J.total_positions != -1)
+			if(!J.is_position_available())
 				jobs += J.title
 		if (!jobs.len)
 			to_chat(usr, "There are no fully staffed jobs.")
