@@ -64,3 +64,6 @@
 
 /mob/living/carbon/human/stok/New(var/new_loc)
 	..(new_loc, "Stok")
+
+/mob/living/carbon/human/adherent/New(var/new_loc)
+	..(new_loc, SPECIES_ADHERENT)
