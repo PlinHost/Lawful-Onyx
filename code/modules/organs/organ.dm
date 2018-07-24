@@ -338,6 +338,9 @@ var/list/organ_cache = list()
 			. += "Decaying"
 		else
 			. += "Necrotic"
+	if(BP_IS_BRITTLE(src))
+		. += "Brittle"
+
 	switch (germ_level)
 		if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE + 200)
 			. +=  "Mild Infection"

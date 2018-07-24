@@ -202,6 +202,41 @@
 	target.apply_damage(rand(5,10), BURN, affected)
 
 //////////////////////////////////////////////////////////////////
+//	robotic limb brittleness repair surgery step
+//////////////////////////////////////////////////////////////////
+/datum/surgery_step/robotics/repair_brittle
+	allowed_tools = list(/obj/item/stack/nanopaste = 100)
+	min_duration = 50
+	max_duration = 60
+
+/datum/surgery_step/robotics/repair_brittle/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
+	. = ..()
+	if(user.skill_check(SKILL_ELECTRICAL, SKILL_BASIC))
+		. += 10
+
+/datum/surgery_step/robotics/repair_brittle/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	return ..() && affected && BP_IS_BRITTLE(affected) && affected.hatch_state == HATCH_OPENED && target_zone != BP_MOUTH
+
+/datum/surgery_step/robotics/repair_brittle/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	user.visible_message("[user] begins to repair the brittle metal inside \the [target]'s [affected.name]." , \
+	"You begin to repair the brittle metal inside \the [target]'s [affected.name].")
+	..()
+
+/datum/surgery_step/robotics/repair_brittle/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	user.visible_message("<span class='notice'>[user] finishes repairing the brittle interior of \the [target]'s [affected.name].</span>", \
+	"<span class='notice'>You finish repairing the brittle interior of \the [target]'s [affected.name].</span>")
+	affected.status &= ~ORGAN_BRITTLE
+
+/datum/surgery_step/robotics/repair_brittle/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	user.visible_message("<span class='warning'>[user] causes some of \the [target]'s [affected.name] to crumble!</span>",
+	"<span class='warning'>You cause some of \the [target]'s [affected.name] to crumble!</span>")
+	target.apply_damage(rand(5,10), BRUTE, affected)
+
+//////////////////////////////////////////////////////////////////
 //	robotic limb burn damage repair surgery step
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/robotics/repair_burn
@@ -273,7 +308,7 @@
 	if (!hasorgans(target))
 		return
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	if(!affected || BP_IS_BRITTLE(affected)) return
+	if(!affected) return
 
 	for(var/obj/item/organ/internal/I in affected.internal_organs)
 		if(I.isrobotic() && I.damage > 0)
@@ -348,7 +383,7 @@
 	var/list/attached_organs = list()
 	for(var/organ in target.internal_organs_by_name)
 		var/obj/item/organ/I = target.internal_organs_by_name[organ]
-		if(I && !(I.status & ORGAN_CUT_AWAY) && I.parent_organ == target_zone)
+		if(I && !(I.status & ORGAN_CUT_AWAY) && !BP_IS_CRYSTAL(I) && I.parent_organ == target_zone)
 			attached_organs |= organ
 
 	var/organ_to_remove = input(user, "Which organ do you want to prepare for removal?") as null|anything in attached_organs

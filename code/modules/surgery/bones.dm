@@ -42,7 +42,9 @@
 	var/bone = affected.encased ? "[target]'s [affected.encased]" : "bones in [target]'s [affected.name]"
 	user.visible_message("<span class='notice'>[user] applies some [tool.name] to [bone]</span>", \
 		"<span class='notice'>You apply some [tool.name] to [bone].</span>")
-	affected.stage = 1
+	if(affected.stage == 0)
+		affected.stage = 1
+	affected.status &= ~ORGAN_BRITTLE
 
 /datum/surgery_step/glue_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
