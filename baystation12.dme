@@ -186,6 +186,7 @@
 #include "code\controllers\subsystems\timer.dm"
 #include "code\controllers\subsystems\wireless.dm"
 #include "code\controllers\subsystems\xenoarch.dm"
+#include "code\controllers\subsystems\initialization\materials.dm"
 #include "code\controllers\subsystems\processing\airflow.dm"
 #include "code\controllers\subsystems\processing\fast_process.dm"
 #include "code\controllers\subsystems\processing\mobs.dm"
