@@ -170,7 +170,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(lying && (species.prone_overlay_offset[1] || species.prone_overlay_offset[2]))
 			M.Translate(species.prone_overlay_offset[1], species.prone_overlay_offset[2])
 
-		for(var/entry in visible_overlays)
+		for(var/i = 1 to LAZYLEN(visible_overlays))
+			var/entry = visible_overlays[i]
 			if(istype(entry, /image))
 				var/image/overlay = entry
 				overlay.transform = M
