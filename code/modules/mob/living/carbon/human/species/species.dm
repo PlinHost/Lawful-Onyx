@@ -337,7 +337,7 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 	for(var/obj/item/organ/O in (H.organs|H.internal_organs))
 		O.owner = H
-		post_organ_rejuvenate(O)
+		post_organ_rejuvenate(O, H)
 
 	H.sync_organ_dna()
 
@@ -381,12 +381,14 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	return
 
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
-	add_inherent_verbs(H)
-	add_base_auras(H)
-	H.mob_bump_flag = bump_flag
-	H.mob_swap_flags = swap_flags
-	H.mob_push_flags = push_flags
-	H.pass_flags = pass_flags
+	if(H)
+		add_inherent_verbs(H)
+		add_base_auras(H)
+		H.mob_bump_flag = bump_flag
+		H.mob_swap_flags = swap_flags
+		H.mob_push_flags = push_flags
+		H.pass_flags = pass_flags
+		handle_limbs_setup(H)
 
 /datum/species/proc/handle_pre_spawn(var/mob/living/carbon/human/H)
 	return
@@ -520,7 +522,9 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 
 //Mostly for toasters
 /datum/species/proc/handle_limbs_setup(var/mob/living/carbon/human/H)
-	return FALSE
+	if(H)
+		for(var/thing in H.organs)
+			post_organ_rejuvenate(thing, H)
 
 // Impliments different trails for species depending on if they're wearing shoes.
 /datum/species/proc/get_move_trail(var/mob/living/carbon/human/H)

@@ -169,6 +169,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/matrix/M = matrix()
 		if(lying && (species.prone_overlay_offset[1] || species.prone_overlay_offset[2]))
 			M.Translate(species.prone_overlay_offset[1], species.prone_overlay_offset[2])
+
 		for(var/entry in visible_overlays)
 			if(istype(entry, /image))
 				var/image/overlay = entry
