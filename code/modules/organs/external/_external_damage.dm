@@ -23,7 +23,7 @@
 		if(BP_IS_BRITTLE(src))
 			brute = Floor(brute * 1.5)
 	else if(BP_IS_CRYSTAL(src))
-		if(burn)
+		if(burn && laser)
 			burn = Floor(burn * 0.1)
 			if(burn)
 				brute += burn // Stress fracturing from heat!
@@ -31,7 +31,7 @@
 				burn = 0
 			if(prob(25))
 				owner.visible_message("<span class='warning'>\The [owner]'s crystalline [name] shines with absorbed energy!</span>")
-		else
+		if(brute)
 			brute = Floor(brute * 0.8)
 
 	if(used_weapon)
