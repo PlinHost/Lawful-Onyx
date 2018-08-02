@@ -2,10 +2,7 @@
 	robotic = ORGAN_ROBOT
 	status = 0
 	name = "vocal synthesiser"
-	icon_state = "voicebox"
-	parent_organ = BP_CHEST
-	organ_tag = BP_VOICE
-	will_assist_languages = list(LANGUAGE_GALCOM, LANGUAGE_LUNAR, LANGUAGE_GUTTER, LANGUAGE_SOL_COMMON, LANGUAGE_EAL, LANGUAGE_INDEPENDENT, LANGUAGE_SPACER)
+	assists_languages = list(LANGUAGE_GALCOM, LANGUAGE_LUNAR, LANGUAGE_GUTTER, LANGUAGE_SOL_COMMON, LANGUAGE_EAL, LANGUAGE_INDEPENDENT, LANGUAGE_SPACER)
 
 
 /obj/item/organ/internal/voicebox/nabber/New()
