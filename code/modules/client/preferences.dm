@@ -344,8 +344,6 @@ datum/preferences
 	if(!character.isSynthetic())
 		character.nutrition = rand(140,360)
 
-	return
-
 
 /datum/preferences/proc/open_load_dialog(mob/user)
 	var/dat  = list()
