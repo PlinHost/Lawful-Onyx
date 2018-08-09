@@ -120,7 +120,8 @@
 		/obj/item/taperoll,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/marshalling_wand,
-		/obj/item/weapon/hand_labeler
+		/obj/item/weapon/hand_labeler,
+		/obj/item/clothing/gloves
 		)
 
 
@@ -202,7 +203,6 @@
 		/obj/item/weapon/gun/energy/taser,
 		/obj/item/weapon/gun/energy/stunrevolver,
 		/obj/item/weapon/flame/lighter,
-		/obj/item/clothing/glasses/hud/security,
 		/obj/item/device/flashlight,
 		/obj/item/device/pda,
 		/obj/item/device/radio/headset,
@@ -212,7 +212,8 @@
 		/obj/item/taperoll,
 		/obj/item/device/holowarrant,
 		/obj/item/weapon/magnetic_ammo,
-		/obj/item/device/binoculars
+		/obj/item/device/binoculars,
+		/obj/item/clothing/gloves
 		)
 
 /obj/item/weapon/storage/belt/general
@@ -223,14 +224,12 @@
 	overlay_flags = BELT_OVERLAY_ITEMS
 	can_hold = list(
 		/obj/item/device/flash,
-		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/melee/telebaton,
 		/obj/item/device/taperecorder,
 		/obj/item/weapon/folder,
 		/obj/item/weapon/paper,
 		/obj/item/weapon/clipboard,
 		/obj/item/modular_computer/tablet,
-		/obj/item/device/flash,
 		/obj/item/device/flashlight,
 		/obj/item/modular_computer/pda,
 		/obj/item/device/radio/headset,
@@ -246,7 +245,12 @@
 		/obj/item/weapon/marshalling_wand,
 		/obj/item/device/camera,
 		/obj/item/weapon/hand_labeler,
-		/obj/item/device/destTagger
+		/obj/item/device/destTagger,
+		/obj/item/clothing/glasses,
+		/obj/item/clothing/head/soft,
+		/obj/item/weapon/hand_labeler,
+		/obj/item/clothing/gloves,
+		/obj/item/weapon/crowbar/prybar
 		)
 
 /obj/item/weapon/storage/belt/holster/general
@@ -279,7 +283,12 @@
 		/obj/item/device/binoculars,
 		/obj/item/weapon/marshalling_wand,
 		/obj/item/device/camera,
-		/obj/item/device/destTagger
+		/obj/item/device/destTagger,
+		/obj/item/clothing/glasses,
+		/obj/item/clothing/head/soft,
+		/obj/item/weapon/hand_labeler,
+		/obj/item/clothing/gloves,
+		/obj/item/weapon/crowbar/prybar
 		)
 
 /obj/item/weapon/storage/belt/soulstone
