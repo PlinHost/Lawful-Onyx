@@ -76,6 +76,7 @@
 //Area flags, possibly more to come
 #define AREA_FLAG_RAD_SHIELDED 1 // shielded from radiation, clearly
 #define AREA_FLAG_EXTERNAL     2 // External as in exposed to space, not outside in a nice, green, forest
+#define AREA_FLAG_ION_SHIELDED 4 // shielded from ionospheric anomalies as an FBP / IPC
 
 #define CUSTOM_ITEM_OBJ 'icons/obj/custom_items_obj.dmi'
 #define CUSTOM_ITEM_MOB null
