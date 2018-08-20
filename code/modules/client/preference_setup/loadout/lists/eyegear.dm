@@ -34,6 +34,9 @@
 	path = /obj/item/clothing/glasses/science
 	allowed_roles = RESEARCH_ROLES
 
+/datum/gear/eyes/sciencegoggles/prescription
+	display_name = "Science Goggles, prescription"
+	path = /obj/item/clothing/glasses/science/prescription
 /datum/gear/eyes/security
 	display_name = "Security HUD"
 	path = /obj/item/clothing/glasses/hud/security
