@@ -81,7 +81,7 @@
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
-	desc = "Optical Meson Scanner with prescription lenses."
+	desc = "Optical meson scanner with prescription lenses."
 	prescription = 6
 
 /obj/item/clothing/glasses/science
@@ -92,6 +92,11 @@
 	hud_type = HUD_SCIENCE
 	toggleable = TRUE
 	electric = TRUE
+
+/obj/item/clothing/glasses/science/prescription
+	name = "prescription science goggles"
+	desc = "Science hoggles with prescription lenses."
+	prescription = 6
 
 /obj/item/clothing/glasses/science/Initialize()
 	. = ..()
