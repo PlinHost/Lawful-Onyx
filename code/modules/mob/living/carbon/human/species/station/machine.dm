@@ -54,8 +54,6 @@
 
 	vision_organ = BP_OPTICS
 
-	override_limb_types = list(BP_HEAD = /obj/item/organ/external/head/no_eyes)
-
 	heat_discomfort_level = 373.15
 	heat_discomfort_strings = list(
 		"Your CPU temperature probes warn you that you are approaching critical heat levels!"
