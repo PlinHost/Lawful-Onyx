@@ -33,13 +33,8 @@
 /mob/living/simple_animal/hostile/proc/FindTarget()
 	if(!faction) //No faction, no reason to attack anybody.
 		return null
-	var/atom/T = null
 	stop_automated_movement = 0
 	for(var/atom/A in ListTargets(10))
-
-		if(A == src)
-			continue
-
 		var/atom/F = Found(A)
 		if(F)
 			T = F
