@@ -102,9 +102,12 @@
 
 /obj/item/organ/internal/lungs/proc/rupture()
 	var/obj/item/organ/external/parent = owner.get_organ(parent_organ)
-	if(istype(parent))
-		owner.custom_pain("You feel a stabbing pain in your [parent.name]!", 50, affecting = parent)
-	bruise()
+	if(istype(owner.internal_organs_by_name["tracheae"],/obj/item/organ/internal/lungs/nabber))
+		to_chat(owner, "<span class='danger'>You feel air rushing through your trachea!</span>")
+	else
+		if(istype(parent))
+			owner.custom_pain("You feel a stabbing pain in your [parent.name]!", 50, affecting = parent)
+		bruise()
 
 /obj/item/organ/internal/lungs/proc/handle_breath(datum/gas_mixture/breath, var/forced)
 	if(!owner)
