@@ -37,6 +37,8 @@
 	max_gas = list("phoron" = 1, "carbon_dioxide" = 5, "methyl_bromide" = 1)
 	mob_size = MOB_LARGE
 
+	bleed_colour = "#0d5a71"
+
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/giant_spider/nurse
 	desc = "Furry and beige, it makes you shudder to look at it. This one has brilliant green eyes."

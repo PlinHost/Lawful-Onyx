@@ -33,6 +33,8 @@
 	var/blood_per_tick = 4.25
 	var/health_per_tick = 0.8
 
+	bleed_colour = "#aad9de"
+
 /mob/living/simple_animal/hostile/vagrant/Initialize()
 	. = ..()
 	if(prob(40))
