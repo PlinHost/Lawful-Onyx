@@ -19,10 +19,11 @@
 /obj/item/weapon/soap/proc/wet()
 	reagents.add_reagent(/datum/reagent/space_cleaner, 15)
 
-/obj/item/weapon/soap/Crossed(AM as mob|obj)
-	if (istype(AM, /mob/living))
-		var/mob/living/M =	AM
-		M.slip("the [src.name]",3)
+/obj/item/weapon/soap/Crossed(var/mob/living/AM)
+	if (istype(AM))
+		if(AM.pulledby)
+			return
+		AM.slip("the [src.name]",3)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
