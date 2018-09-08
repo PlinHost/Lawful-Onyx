@@ -21,14 +21,14 @@
 		onInstall()
 
 /obj/item/organ/internal/augment/proc/onInstall()
-
+	return
 
 /obj/item/organ/internal/augment/removed(var/mob/living/user, var/drop_organ=1)
 	onRemove()
 	..()
 
 /obj/item/organ/internal/augment/proc/onRemove()
-
+	return
 
 /obj/item/organ/internal/augment/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver) && allowed_organs.len > 1)
