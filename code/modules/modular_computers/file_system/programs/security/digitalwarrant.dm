@@ -25,6 +25,7 @@ LEGACY_RECORD_STRUCTURE(all_warrants, warrant)
 
 	if(activewarrant)
 		data["warrantname"] = activewarrant.fields["namewarrant"]
+		data["warrantjob"] = activewarrant.fields["jobwarrant"]
 		data["warrantcharges"] = activewarrant.fields["charges"]
 		data["warrantauth"] = activewarrant.fields["auth"]
 		data["type"] = activewarrant.fields["arrestsearch"]
@@ -149,17 +150,24 @@ LEGACY_RECORD_STRUCTURE(all_warrants, warrant)
 			namelist += CR.get_name()
 		var/new_name = sanitize(input(usr, "Please input name") as null|anything in namelist)
 		if(CanInteract(user, GLOB.default_state))
-			if (!new_name || !activewarrant)
+			if (!new_person || !activewarrant)
 				return
-			activewarrant.fields["namewarrant"] = new_name
+			// string trickery to extract name & job
+			var/entry_components = splittext(new_person, " \[")
+			var/name = entry_components[1]
+			var/job = copytext(entry_components[2], 1, length(entry_components[2]))
+			activewarrant.fields["namewarrant"] = name
+			activewarrant.fields["jobwarrant"] = job
 
 	if(href_list["editwarrantnamecustom"])
 		. = 1
 		var/new_name = sanitize(input("Please input name") as null|text)
+		var/new_job = sanitize(input("Please input job") as null|text)
 		if(CanInteract(user, GLOB.default_state))
-			if (!new_name || !activewarrant)
+			if (!new_name || !new_job || !activewarrant)
 				return
 			activewarrant.fields["namewarrant"] = new_name
+			activewarrant.fields["jobwarrant"] = new_job
 
 	if(href_list["editwarrantcharges"])
 		. = 1
