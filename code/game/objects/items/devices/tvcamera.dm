@@ -50,7 +50,7 @@
 	if(..())
 		return 1
 	if(href_list["channel"])
-		var/nc = input(usr, "Channel name", "Select new channel name", channel) as text|null
+		var/nc = sanitize(input(usr, "Channel name", "Select new channel name", channel) as text|null)
 		if(nc)
 			channel = nc
 			camera.c_tag = channel
