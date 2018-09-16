@@ -106,6 +106,9 @@
 	if(..())
 		return 1
 
+	if(href_list["close"])
+		unlook(usr)
+		return 1
 	if (!linked)
 		return
 
